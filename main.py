@@ -19,14 +19,13 @@ def main():
 
  page_content=response.text
 
-#  with open('top_party.html','w') as f:
-#     f.write(page_content)
+
 
  doc=BeautifulSoup(page_content,'html.parser')
  
  def wtf():
 
-    # today = datetime.today().strftime("%Y-%m-%d")
+
     today=datetime.now()
     
     if not os.path.exists("./output_html"):
@@ -42,7 +41,7 @@ def main():
 
 if __name__ == '__main__':    
     main()
-    time.sleep(900)
+    # time.sleep(900)
 
 
 
