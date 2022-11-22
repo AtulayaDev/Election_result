@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 import os
+import time
 
 
 
@@ -41,6 +42,7 @@ def main():
 
 if __name__ == '__main__':    
     main()
+    time.sleep(900)
 
 
 
