@@ -25,7 +25,8 @@ def main():
  
  def wtf():
 
-    today = datetime.today().strftime("%Y-%m-%d")
+    # today = datetime.today().strftime("%Y-%m-%d")
+    today=datetime.now()
     
     if not os.path.exists("./output_html"):
         os.mkdir('./output_html')
@@ -33,7 +34,7 @@ def main():
     if not os.path.exists(f'./output_html/{today}'):
             os.mkdir(f'./output_html/{today}')
 
-    with open(f"./output_html/{today}.html" , "w") as f:
+    with open(f"./output_html/{today}/{today}.html" , "w") as f:
         f.write(page_content)
 
  return wtf()
