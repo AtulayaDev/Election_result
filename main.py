@@ -1,6 +1,4 @@
-import bs4
 import requests
-from bs4 import BeautifulSoup
 from datetime import datetime
 import os
 import time
@@ -10,45 +8,26 @@ import time
 # url for top party through election commision website
 
 
-def main():
-
- url="https://result.election.gov.np/JSONFiles/Election2079/Common/HoRPartyTop5.txt"
- 
- 
- response=requests.get(url)
-
- page_content=response.text
-
-
-
- doc=BeautifulSoup(page_content,'html.parser')
- 
- def wtf():
-
-
+def wtf(page_content):
     today=datetime.now()
+    output_folder = './election_html'
+    if not os.path.exists(output_folder):
+        os.mkdir(output_folder)
+
     
-    if not os.path.exists("./output_html"):
-        os.mkdir('./output_html')
-
-    if not os.path.exists(f'./output_html/{today}'):
-            os.mkdir(f'./output_html/{today}')
-
-    with open(f"./output_html/{today}/{today}.html" , "w") as f:
+    with open(f"{output_folder}/res_{today}.html" , "w") as f:
         f.write(page_content)
 
- return wtf()
-
-if __name__ == '__main__':    
-    main()
-    # time.sleep(900)
-
-
+def main():
+    print("Starting sending request for election result ....")
+    url="https://result.election.gov.np/JSONFiles/Election2079/Common/HoRPartyTop5.txt"
+    response=requests.get(url)
+    
+    wtf(response.text)
 
  
 
-
-    
-
-
-
+if __name__ == '__main__':    
+    while True:
+        main()
+        time.sleep(15 * 60)
