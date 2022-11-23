@@ -35,9 +35,9 @@ def process_file(file : str):
             
             data['PartyId'] = party_data['PartyId']
             data['PartyName'] = party_name_mapper[party_data['PartyId']]
-            data['TotalWin'] = party_data['TotWin']
             data['TotalLead'] = party_data['TotLead']
-            
+            data['TotalWin'] = party_data['TotWin']
+        
             
             save_data(data)
 
