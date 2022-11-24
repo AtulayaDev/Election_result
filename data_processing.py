@@ -1,6 +1,7 @@
 from os import listdir
 import json
 import re
+import database
 
 # process the files that was recently uploaded in election_html and save it to a data base
 
@@ -43,13 +44,13 @@ def process_file(file : str):
 
 
 def save_data(data):
-    # save the relevant data to a database like sqlite, pg , firebase , supabase etc .... 
-    print("===========================")
-    print("Fake saving data to a database")
     print(data)
-    print("Fake saving data complete")
-    print("===========================")
+    # save the relevant data to a database like sqlite, pg , firebase , supabase etc .... 
+     #! need to add that data file in list and execute this in code below i.e new=[#data value]
     pass
+
+# database.add_data() #! need to add c.executemay(bala(new))
+# database.data_main()
 
 def get_date_time_from_file_name(file_name : str):
     date_val = re.findall(r'20[0-9]{2}-[0-9]{2}-[0-9]{2}' ,  file_name)[0]
