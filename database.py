@@ -3,16 +3,11 @@ import sqlite3
 
  
 
-# INSERT_TABLE="INSERT INTO Election (PartyId,PartyName,TotalLead,TotalWin) VALUES(?,?,?,?);"
+database_name = './election_result.db'
+    
 
-CREATE_TABLE="""CREATE TABLE nepal(
-                  PartyId INTEGER,
-                  PartyName TEXT, 
-                  TotalLead INTERGER, 
-                  TotalWin INTEGER
-            );"""
-            
-            
+def create_connection():
+    return sqlite3.connect(database_name)           
 def data_main():          
  conn= sqlite3.connect('election_result.db')
 
@@ -23,29 +18,29 @@ def data_main():
      print(aa)
 
 
- #  c.execute(CREATE_TABLE) no idea how to not run this code.
-
- # c.execute(INSERT_TABLE)
+ 
 
  conn.commit() 
-
  conn.close()
 
-data_main()
+# data_main()
 
-def add_data(PartyId,PartyName,TotalLead,TotalWin): #!here i can add list or create list funtion
-    conn= sqlite3.connect('election_result.db')
-    c=conn.cursor()
-    
-    c.execute("INSERT INTO nepal VALUES (?,?,?,?)",(PartyId,PartyName,TotalLead,TotalWin))#!in this part i can add list
-    
+def add_data(conn, table_name,  data : list): 
+    c = conn.cursor()
+    c.execute(f"""INSERT INTO {table_name} ('CreateDate' , 'CreateTime' , 'PartyId' ,  'PartyName' , 'TotalLead' ,  'TotalWin') 
+    VALUES (?,?,?,?,?,?)""",data)
     conn.commit()
-    conn.close()
     
-    
-#! eg
+def create_table(conn , table_name):
+    cur = conn.cursor()
+    CREATE_TABLE_QUERY=f"""CREATE TABLE IF NOT EXISTS {table_name}(
+                  PartyId INTEGER,
+                  PartyName TEXT, 
+                  TotalLead INTERGER, 
+                  TotalWin INTEGER,
+                  CreateDate TEXT,
+                  CreateTime TEXT
+            );"""
+    cur.execute(CREATE_TABLE_QUERY)
 
-
-
-
-
+    conn.commit()

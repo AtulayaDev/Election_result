@@ -3,11 +3,8 @@ import json
 import re
 import database
 
-# process the files that was recently uploaded in election_html and save it to a data base
-
+# needed variables for the program
 input_folder = './election_html'
-
-
 party_name_mapper = {
     1 : "Nepali Congress",
     2 : "UML",
@@ -16,13 +13,16 @@ party_name_mapper = {
     116 : "National Democratic Party",
     9999 : "Others" 
 }
-
+table_name = 'nepal_result'
+# things to execute before the main function 
+conn = database.create_connection()
+database.create_table(conn , table_name)
 def main():
-    # loop through all the html files in election_html 
+    
     for input_file in listdir(input_folder):
-        process_file(input_file)
+        process_file(input_file )
         
-def process_file(file : str):
+def process_file(file : str ):
     # open the file 
     date_and_time = get_date_time_from_file_name(file)
     data = { 
@@ -35,7 +35,10 @@ def process_file(file : str):
         for party_data in file_data:
             
             data['PartyId'] = party_data['PartyId']
-            data['PartyName'] = party_name_mapper[party_data['PartyId']]
+            try:
+                data['PartyName'] = party_name_mapper[party_data['PartyId']]
+            except: 
+               data['PartyName'] = ''
             data['TotalLead'] = party_data['TotLead']
             data['TotalWin'] = party_data['TotWin']
         
@@ -43,14 +46,12 @@ def process_file(file : str):
             save_data(data)
 
 
-def save_data(data):
-    print(data)
-    # save the relevant data to a database like sqlite, pg , firebase , supabase etc .... 
-     #! need to add that data file in list and execute this in code below i.e new=[#data value]
-    pass
+def save_data(data : dict):
+    data_tuple = tuple(data.values())
+    database.add_data(conn , table_name ,  data_tuple)
+    
 
-# database.add_data() #! need to add c.executemay(bala(new))
-# database.data_main()
+
 
 def get_date_time_from_file_name(file_name : str):
     date_val = re.findall(r'20[0-9]{2}-[0-9]{2}-[0-9]{2}' ,  file_name)[0]
@@ -60,5 +61,9 @@ def get_date_time_from_file_name(file_name : str):
         "date": date_val, 
         "time": time_val
     }
-if __name__ == "__main__":
+
+
+if __name__ == "__main__": 
     main()
+    # things to do after the main has ececuted 
+    conn.close()
