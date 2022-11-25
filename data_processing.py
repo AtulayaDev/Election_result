@@ -6,12 +6,19 @@ import database
 # needed variables for the program
 input_folder = './election_html'
 party_name_mapper = {
-    1 : "Nepali Congress",
-    2 : "UML",
-    3 : "Maoist",
-    158 : "National Freedom Party",
-    116 : "National Democratic Party",
-    9999 : "Others" 
+    1  : "Nepali Congress",
+    2  : "UML",
+    3  : "Maoist",
+    4  : "National Prajatantra Party",
+    10 : "Rastriya Janamorcha",
+    12 : "Nepals Worker&Peasants Party",
+    101: "Peoples Party",
+    116: "UML socialist",
+    117: "National Socialist Party",
+    118: "Loktantrik Samajbadi Party",
+    124: "Peoples Development Party",
+    158: "National Freedom Party",
+    9999:"Individuals candidates" 
 }
 table_name = 'nepal_result'
 # things to execute before the main function 
